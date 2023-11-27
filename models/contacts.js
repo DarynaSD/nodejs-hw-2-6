@@ -1,33 +1,16 @@
-// const { nanoid } = require("nanoid");
-const fs = require("node:fs/promises");
-const path = require("node:path");
-
-// const contactsPath = path.join(process.cwd(), "contacts.json");
-const contactsPath = path.join(__dirname, "contacts.json");
-// console.log(contactsPath)
-
-async function readDB() {
-   const data = await fs.readFile(contactsPath, "utf-8");
-  return JSON.parse(data);
-}
-
-
-async function writeDB(newData) {
-  await fs.writeFile(contactsPath, JSON.stringify(newData));
-}
-
-// 
+const { nanoid } = require("nanoid");
+const { readDB, writeDB } = require("../helpers/pathHelper");
 
 const listContacts = async () => {
   const data = await readDB();
-  return data
-}
+  return data;
+};
 
 const getContactById = async (contactId) => {
-const data = await readDB();
+  const data = await readDB();
   const result = data.find((one) => one.id === contactId);
   return result || null;
-}
+};
 
 const removeContact = async (contactId) => {
   const data = await readDB();
@@ -38,11 +21,36 @@ const removeContact = async (contactId) => {
     await writeDB(result);
   }
   return removed;
-}
+};
 
-const addContact = async (body) => {}
+const addContact = async (body) => {
+  const data = await readDB();
+  const newContact = {
+    id: nanoid(),
+    ...body,
+  };
 
-const updateContact = async (contactId, body) => {}
+  data.push(newContact);
+  await writeDB(data);
+  return newContact;
+};
+
+const updateContact = async (contactId, body) => {
+  const data = await readDB();
+  const oldContact = data.find((one) => one.id === contactId);
+  if (!oldContact) return null;
+
+  const newContact = {
+    contactId,
+    ...body,
+  };
+
+  const index = data.findIndex(oldContact);
+  data[index] = newContact;
+  await writeDB(data);
+
+  return newContact;
+};
 
 module.exports = {
   listContacts,
@@ -50,4 +58,4 @@ module.exports = {
   removeContact,
   addContact,
   updateContact,
-}
+};
