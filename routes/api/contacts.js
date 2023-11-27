@@ -8,8 +8,8 @@ const {
   addContact,
   updateContact,
 } = require("../../models/contacts");
+
 const { addSchema, updateSchema } = require("../../helpers/validateBody");
-const { readDB } = require("../../helpers/pathHelper");
 
 const router = express.Router();
 
@@ -63,7 +63,7 @@ router.put("/:contactId", async (req, res, next) => {
 
   const { contactId } = req.params;
   const result = await updateContact(contactId, req.body);
-  console.log(result)
+  console.log(result);
 
   if (!result) {
     res.status(404).json(HttpError(404, "Not found"));

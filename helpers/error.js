@@ -6,10 +6,3 @@ const HttpError = (status, message) => {
 };
 
 module.exports = HttpError;
-
-  // {
-  //   "id": "vza2RIzNGIwutCVCs4mCL",
-  //   "name": "Wylie Pope",
-  //   "email": "est@utquamvel.net",
-  //   "phone": "(692) 802-2949"
-  // }
