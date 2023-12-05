@@ -7,7 +7,7 @@ const {
   removeContact,
   addContact,
   updateContact,
-} = require("../../models/contacts");
+} = require("../../controllers/contactsController");
 
 const { addSchema, updateSchema } = require("../../helpers/validateBody");
 
