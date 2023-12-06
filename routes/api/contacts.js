@@ -7,9 +7,10 @@ const {
   removeContact,
   addContact,
   updateContact,
+  updateStatusContact,
 } = require("../../controllers/contactsController");
 
-const { addSchema, updateSchema } = require("../../helpers/validateBody");
+const { addSchema, updateSchema, updateFavoriteSchema } = require("../../helpers/validateBody");
 
 const router = express.Router();
 
@@ -71,5 +72,24 @@ router.put("/:contactId", async (req, res, next) => {
 
   res.status(200).json(result);
 });
+
+// update favorite
+router.patch("/:contactId/favorite", async (req, res, next) => {
+const { error } = updateFavoriteSchema.validate(req.body);
+
+  if (error) {
+    res.status(400).json(HttpError(400, "Missing field favorite"));
+  }
+
+const { contactId } = req.params;
+  const result = await updateStatusContact(contactId, req.body, {new: true});
+  console.log(result);
+
+  if (!result) {
+    res.status(404).json(HttpError(404, "Not found"));
+  }
+
+  res.status(200).json(result);
+})
 
 module.exports = router;
