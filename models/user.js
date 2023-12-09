@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const handleMongooseError = require("../helpers/mongooseError")
 
 const userSchema = new Schema({
   password: {
@@ -17,6 +18,8 @@ const userSchema = new Schema({
   },
   token: String
 }, { versionKey: false, timestamps: true })
+
+userSchema.post("save", handleMongooseError)
 
 const User = model("user", userSchema)
 

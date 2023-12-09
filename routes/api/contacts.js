@@ -10,7 +10,7 @@ const {
   updateStatusContact,
 } = require("../../controllers/contactsController");
 
-const { addSchema, updateSchema, updateFavoriteSchema } = require("../../helpers/validateBody");
+const { addSchema, updateSchema, updateFavoriteSchema } = require("../../joi_validation/contact_validation");
 
 const router = express.Router();
 
