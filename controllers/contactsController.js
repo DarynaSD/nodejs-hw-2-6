@@ -1,6 +1,4 @@
-// const { nanoid } = require("nanoid");
 const Contact = require("../models/contact.js")
-// const { readDB, writeDB } = require("../helpers/pathHelper");
 
 const listContacts = async () => {
   const data = await Contact.find();

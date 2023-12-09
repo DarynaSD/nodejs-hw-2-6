@@ -21,5 +21,5 @@ const contactSchema = new Schema({
 // модель (клас, який буде працювати з колекцією contact)
 const Contact = model("contact", contactSchema)
 
-// імпортуємо в роути замість ф-ї роботи з json-ом
+// імпортуємо в контролери замість ф-ї роботи з json-ом
 module.exports = Contact
