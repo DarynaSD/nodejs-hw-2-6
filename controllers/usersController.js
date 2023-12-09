@@ -6,11 +6,12 @@ const ctrlWrapper = require("../helpers/ctrlWrapper");
 const register = async (req, res) => {
     const newUser = await User.create(req.body);
 
-    res.json({
+    res.status(201).json({user: {
         email: newUser.email,
-        massage: "registered successfull"
-    })
+        subscription: "starter",
+    }})
 }
+
 
 module.exports = {
     register: ctrlWrapper(register),
