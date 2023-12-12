@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const handleMongooseError = require("../helpers/mongooseError");
 
 // схема
 const contactSchema = new Schema(
@@ -24,6 +25,8 @@ const contactSchema = new Schema(
   },
   { versionKey: false, timestamps: true }
 );
+
+contactSchema.post("save", handleMongooseError)
 
 // модель (клас, який буде працювати з колекцією contact)
 const Contact = model("contact", contactSchema);
