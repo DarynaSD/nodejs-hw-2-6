@@ -16,7 +16,7 @@ const isValidToken = async (req, res, next) => {
     const { id: _id } = jwt.verify(rowTokenFromFrontend, SECRET_KEY); // перевірка на валідність - чи ми шифрували токен
       const exist = await User.findOne({ _id }); // шукаємо за id (з пейлоада) юзера в базі
 
-    if (!exist) {
+    if (!exist || !exist.token || exist.token !== rowTokenFromFrontend) {
       next(HttpError(401, "Not authorized"));
       }
       
