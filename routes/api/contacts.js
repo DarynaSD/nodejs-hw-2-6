@@ -10,15 +10,16 @@ const {
 } = require("../../controllers/contactsController");
 
 const isValidId = require("../../middlewares/isValidId");
+const isValidToken = require("../../middlewares/isValidToken");
 
 
 const router = express.Router();
 
 // get
-router.get("/", listContacts);
+router.get("/", isValidToken, listContacts);
 
 // get by id
-router.get("/:contactId", getContactById);
+router.get("/:contactId", isValidToken, isValidId, getContactById);
 
 // delete
 router.delete("/:contactId", isValidId, removeContact);
@@ -27,7 +28,7 @@ router.delete("/:contactId", isValidId, removeContact);
 router.post("/", addContact);
 
 // update
-router.put("/:contactId", isValidId, updateContact);
+router.put("/:contactId", isValidToken, isValidId, updateContact);
 
 // update favorite
 router.patch("/:contactId/favorite", isValidId, updateStatusContact)

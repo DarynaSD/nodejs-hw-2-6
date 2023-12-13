@@ -10,6 +10,7 @@ const {
 
 // get all
 const listContacts = async (req, res) => {
+
   const data = await Contact.find();
   res.json(data);
 };

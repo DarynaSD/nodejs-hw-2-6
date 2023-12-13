@@ -34,6 +34,8 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
 
+  // console.log(req.headers)
+
   const exist = await User.findOne({ email });
 
   if (!exist) {
@@ -50,7 +52,7 @@ const login = async (req, res) => {
   };
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "12h" });
-  console.log(token);
+  // console.log(token);
 
   res.json({ token });
 };
