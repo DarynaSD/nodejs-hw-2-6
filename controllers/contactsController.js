@@ -10,8 +10,10 @@ const {
 
 // get all
 const listContacts = async (req, res) => {
-
-  const data = await Contact.find();
+  const { _id: owner } = req.user;
+  // console.log(req.user)
+  // console.log("owner", owner)
+  const data = await Contact.find({owner});
   res.json(data);
 };
 
@@ -51,7 +53,8 @@ const addContact = async (req, res, next) => {
     res.status(400).json({ message: "Missing required name field" });
   }
 
-  const newContact = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const newContact = await Contact.create({...req.body, owner});
   res.status(201).json(newContact);
 };
 

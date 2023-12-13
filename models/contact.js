@@ -26,7 +26,7 @@ const contactSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-contactSchema.post("save", handleMongooseError)
+contactSchema.post("save", handleMongooseError);
 
 // модель (клас, який буде працювати з колекцією contact)
 const Contact = model("contact", contactSchema);

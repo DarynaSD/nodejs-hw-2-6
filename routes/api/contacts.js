@@ -22,15 +22,15 @@ router.get("/", isValidToken, listContacts);
 router.get("/:contactId", isValidToken, isValidId, getContactById);
 
 // delete
-router.delete("/:contactId", isValidId, removeContact);
+router.delete("/:contactId", isValidToken, isValidId, removeContact);
 
 // add - валідацію body перенесла в контролер, щоб зберегти кастомний меседж
-router.post("/", addContact);
+router.post("/", isValidToken, addContact);
 
 // update
 router.put("/:contactId", isValidToken, isValidId, updateContact);
 
 // update favorite
-router.patch("/:contactId/favorite", isValidId, updateStatusContact)
+router.patch("/:contactId/favorite", isValidToken, isValidId, updateStatusContact)
 
 module.exports = router;
