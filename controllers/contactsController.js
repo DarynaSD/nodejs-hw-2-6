@@ -11,9 +11,10 @@ const {
 // get all
 const listContacts = async (req, res) => {
   const { _id: owner } = req.user;
-  // console.log(req.user)
-  // console.log("owner", owner)
-  const data = await Contact.find({owner});
+  const { page = 1, limit = 4 } = req.query;
+  const skip = (page - 1) * limit;
+
+  const data = await Contact.find({owner}, "", {skip, limit});
   res.json(data);
 };
 
