@@ -9,6 +9,7 @@ const { registerSchema, loginSchema } = require("../../joi_validation/user_valid
 // controllers
 const ctrl = require("../../controllers/usersController");
 const isValidToken = require("../../middlewares/isValidToken");
+const upload = require("../../middlewares/upload");
 
 const router = express.Router();
 
@@ -20,5 +21,7 @@ router.post("/register", validateBody(registerSchema), ctrl.register)
 router.post("/login", validateBody(loginSchema), ctrl.login)
 router.get("/current", isValidToken, ctrl.getCurrent)
 router.post("/logout", isValidToken, ctrl.logout)
+
+router.patch("/avatars", isValidToken, upload.single("avatar"), ctrl.avatar)
 
 module.exports = router;
