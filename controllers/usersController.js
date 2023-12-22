@@ -5,7 +5,6 @@ const path = require("path");
 const fs = require("fs/promises");
 const Jimp = require("jimp");
 
-
 const User = require("../models/user");
 
 const ctrlWrapper = require("../helpers/ctrlWrapper");
@@ -87,6 +86,10 @@ const logout = async (req, res) => {
 // update avatar
 const avatar = async (req, res) => {
   const { _id } = req.user;
+
+  if (!req.file) {
+    throw HttpError(400, "File not attached. Attach the file and try again.");
+  }
 
   const { path: tempUpload, originalname } = req.file;
   const uniqName = `${_id}_${originalname}`;
