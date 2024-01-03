@@ -4,7 +4,7 @@ const express = require("express");
 const validateBody = require("../../middlewares/validateBody")
 
 // schema for validation
-const { registerSchema, loginSchema } = require("../../joi_validation/user_validation")
+const { registerSchema, loginSchema, verifyEmailShema } = require("../../joi_validation/user_validation")
 
 // controllers
 const ctrl = require("../../controllers/usersController");
@@ -18,6 +18,7 @@ const router = express.Router();
 router.post("/register", validateBody(registerSchema), ctrl.register)
 
 router.get("/verify/:verificationToken", ctrl.verifyEmail)
+router.post("/verify", validateBody(verifyEmailShema), ctrl.resendEmail)
 
 // signin, authorization
 router.post("/login", validateBody(loginSchema), ctrl.login)

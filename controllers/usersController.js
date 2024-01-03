@@ -67,6 +67,32 @@ const verifyEmail = async (req, res) => {
   res.status(200).json({message: "Verification successful"})
 }
 
+// RESEND VERIFY EMAIL
+const resendEmail = async (req, res) => {
+  const { email } = req.body;
+  const exist = await User.findOne({ email });
+
+  if (!exist) {
+     throw HttpError(404, "User not found");
+  }
+
+  if (exist.verify) {
+      throw HttpError(400, "Verification has already been passed");
+  }
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<p>Click <a target="_blank" href="${BASE_URL}/users/verify/${exist.verificationToken}">here</a> to verify email</p>`,
+  };
+
+  await sendEmail(verifyEmail);
+
+  res.status(200).json({
+    message: "Verification email sent",
+  });
+}
+
 // LOGIN
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -148,4 +174,5 @@ module.exports = {
   logout: ctrlWrapper(logout),
   avatar: ctrlWrapper(avatar),
   verifyEmail: ctrlWrapper(verifyEmail),
+  resendEmail: ctrlWrapper(resendEmail),
 };
